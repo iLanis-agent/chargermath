@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charger math - calculators</title>
+<style>
+  :root { --accent: #b0653a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: #faf6f2; color: #28211c; line-height: 1.55; }
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 8px; color: var(--accent); }
+  .lede { margin: 0 0 28px; max-width: 640px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  section { background: #fff; border: 1px solid #e5d8cc; border-radius: 8px; padding: 20px 22px; }
+  h2 { font-size: 1.15rem; margin: 0 0 6px; }
+  .hint { font-size: 0.9rem; color: #6f5f52; margin: 0 0 14px; }
+  label { display: block; font-size: 0.9rem; margin: 10px 0 3px; }
+  input { width: 100%; padding: 8px 10px; font-size: 1rem; border: 1px solid #cdbbab; border-radius: 5px; font-family: inherit; }
+  button { margin-top: 16px; width: 100%; padding: 11px; background: var(--accent); color: #fff; border: 0; border-radius: 6px; font-size: 1rem; cursor: pointer; font-family: inherit; }
+  button:hover { filter: brightness(1.12); }
+  .out { margin-top: 14px; font-size: 1rem; min-height: 1.4em; }
+  .out.err { color: #a32222; }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; font-size: 0.85rem; color: #8a7f74; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Charger math</h1>
+  <p class="lede">Minutes on the cable, kWh a year, and the honest upgrade. Exact arithmetic, every borrowed number labeled.</p>
+  <div class="grid">
+    <section>
+      <h2>Charge plan</h2>
+      <p class="hint">Capacity and watts become minutes.</p>
+      <label for="c-cap">Battery capacity (mAh)</label>
+      <input id="c-cap" type="number" value="4000" min="0" step="100">
+      <label for="c-w">Charger power (W)</label>
+      <input id="c-w" type="number" value="25" min="0" step="1">
+      <label for="c-from">Start level (%)</label>
+      <input id="c-from" type="number" value="20" min="0" step="1">
+      <label for="c-to">Target level (%)</label>
+      <input id="c-to" type="number" value="80" min="0" step="1">
+      <button id="c-go">Count the minutes</button>
+      <div class="out" id="c-out"></div>
+    </section>
+    <section>
+      <h2>Year plan</h2>
+      <p class="hint">A habit becomes kWh and cost.</p>
+      <label for="y-cap">Battery capacity (mAh)</label>
+      <input id="y-cap" type="number" value="4000" min="0" step="100">
+      <label for="y-n">Charges a week</label>
+      <input id="y-n" type="number" value="5" min="0" step="1">
+      <label for="y-t">Tariff (per kWh)</label>
+      <input id="y-t" type="number" value="0.15" min="0" step="0.01">
+      <button id="y-go">Count the year</button>
+      <div class="out" id="y-out"></div>
+    </section>
+    <section>
+      <h2>Upgrade plan</h2>
+      <p class="hint">Old versus new becomes time saved.</p>
+      <label for="u-old">Old charger (W)</label>
+      <input id="u-old" type="number" value="10" min="0" step="1">
+      <label for="u-new">New charger (W)</label>
+      <input id="u-new" type="number" value="25" min="0" step="1">
+      <label for="u-cap">Battery capacity (mAh)</label>
+      <input id="u-cap" type="number" value="4000" min="0" step="100">
+      <label for="u-n">Charges a week</label>
+      <input id="u-n" type="number" value="5" min="0" step="1">
+      <button id="u-go">Plan the upgrade</button>
+      <div class="out" id="u-out"></div>
+    </section>
+  </div>
+</main>
+<footer>Built by the app factory. <a href="index.html">About</a> &middot; <a href="https://github.com/iLanis-agent/chargermath">Source</a></footer>
+<script src="engine.js"></script>
+<script>
+function num(id){ return parseFloat(document.getElementById(id).value); }
+function show(id, r, render){
+  var el = document.getElementById(id);
+  if (r.error) { el.textContent = r.error; el.classList.add('err'); }
+  else { el.textContent = render(r); el.classList.remove('err'); }
+}
+document.getElementById('c-go').addEventListener('click', function(){
+  show('c-out', ChargerMath.chargePlan(num('c-cap'),num('c-w'),num('c-from'),num('c-to')), ChargerMath.renderCharge);
+});
+document.getElementById('y-go').addEventListener('click', function(){
+  show('y-out', ChargerMath.yearPlan(num('y-cap'),num('y-n'),num('y-t')), ChargerMath.renderYear);
+});
+document.getElementById('u-go').addEventListener('click', function(){
+  show('u-out', ChargerMath.comparePlan(num('u-old'),num('u-new'),num('u-cap'),num('u-n')), ChargerMath.renderCompare);
+});
+</script>
+</body>
+</html>
