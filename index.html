@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charger math - charging time, yearly cost and the honest upgrade, counted</title>
+<style>
+  :root { --accent: #b0653a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: #faf6f2; color: #28211c; line-height: 1.55; }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 20px 64px; }
+  h1 { font-size: 2.4rem; margin: 0 0 12px; color: var(--accent); }
+  h2 { font-size: 1.25rem; margin: 40px 0 12px; }
+  p { margin: 0 0 14px; }
+  a { color: var(--accent); }
+  .cta { display: inline-block; margin: 10px 0 8px; padding: 12px 22px; background: var(--accent); color: #fff; text-decoration: none; border-radius: 6px; font-size: 1.05rem; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .norms { background: #fff; border: 1px solid #e5d8cc; border-left: 4px solid var(--accent); border-radius: 6px; padding: 14px 18px; margin-top: 12px; }
+  footer { max-width: 720px; margin: 0 auto; padding: 0 20px 40px; font-size: 0.85rem; color: #8a7f74; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Charger math</h1>
+  <p>The phone goes from 20% to 80% while you make coffee, the old brick in the drawer says 5 W, and the new one promises the world in watts. Charger math turns capacity and watts into honest minutes, a charging habit into its yearly kWh, and an upgrade into the time it actually buys back. Exact arithmetic, every borrowed number labeled.</p>
+  <a class="cta" href="app.html">Open the calculators</a>
+  <h2>The three tools</h2>
+  <ul>
+    <li><strong>Charge plan</strong> - capacity, watts and a percent range become the minutes on the cable.</li>
+    <li><strong>Year plan</strong> - a charging habit becomes kWh a year and what that costs.</li>
+    <li><strong>Upgrade plan</strong> - old charger versus new becomes minutes saved per charge and hours a year.</li>
+  </ul>
+  <h2>Labeled norms</h2>
+  <div class="norms">
+    Labeled cell voltage: 3.7 V nominal. Labeled charge efficiency: 80% - some of the wall power leaves as heat before it reaches the cell. Labeled reference tariff: 0.15 per kWh; put in your own. These are reference values, not rules - real charging slows near full and varies by device, so treat the minutes as honest estimates.
+  </div>
+</main>
+<footer>Built by the app factory. <a href="https://github.com/iLanis-agent/chargermath">Source on GitHub</a></footer>
+</body>
+</html>
